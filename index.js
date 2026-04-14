@@ -217,6 +217,7 @@ server.post('/contact', async (req, res) => {
         await transporter.sendMail(mailOptions)
         res.json({ success: true, message: "Message sent successfully ✅" })
     } catch (err) {
+        console.log(err);
         res.json({ success: false, message: "Error sending message ❌" })
     }
 })
