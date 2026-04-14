@@ -17,7 +17,10 @@ server.use(express.urlencoded({ extended: true }));
 server.use(express.json());
 server.use(express.static(__dirname));
 
-const url = "mongodb://localhost:27017";
+// const url = "mongodb://localhost:27017";
+// const client = new MongoClient(url);
+
+const url = process.env.MONGO_URI;
 const client = new MongoClient(url);
 
 let db;
@@ -218,6 +221,8 @@ server.post('/contact', async (req, res) => {
     }
 })
 
-server.listen(3000, () => {
-  console.log("Server running on port 3000 🚀");
+const PORT = process.env.PORT || 3000;
+
+server.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
 });
