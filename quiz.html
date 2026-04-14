@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quiz App</title>
+    <!-- <link rel="stylesheet" href="styles.css" /> -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* =========================================
+           GLOBAL & BASE STYLES
+           ========================================= */
+      :root {
+        --primary-color: #6366f1;
+        --primary-hover: #4f46e5;
+        --bg-gradient: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
+        --surface: #ffffff;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --border-color: #e2e8f0;
+        --radius: 16px;
+        --shadow:
+          0 10px 25px -5px rgba(0, 0, 0, 0.1),
+          0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Fredoka One", cursive;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+      }
+
+      body {
+        font-family: "Fredoka One", cursive;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background: var(--bg-gradient);
+        color: var(--text-main);
+      }
+
+      .container {
+        background: var(--surface);
+        padding: 60px 40px;
+        width: 100%;
+        max-width: 450px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        text-align: center;
+        box-sizing: border-box;
+        /* border: 2px solid black; */
+        transition: height 0.3s ease;
+        margin: 20px;
+      }
+
+      /* Typography Improvements */
+      h1 {
+        font-size: 2.2rem;
+        margin-top: 0;
+        margin-bottom: 0.7rem;
+        color: var(--text-main);
+        font-weight: 800;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+        margin-top: 0;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+        font-weight: 700;
+      }
+
+      h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        color: var(--text-main);
+        font-weight: 500;
+        line-height: 1.5;
+      }
+
+      p {
+        font-size: 1.1rem;
+        margin: 12px 0;
+        color: var(--text-muted);
+        font-weight: 500;
+      }
+
+      /* Modern Button Styling */
+      button {
+        margin: 15px 5px;
+        padding: 15px 24px;
+        background: blue;
+        border-radius: 50px;
+        color: white;
+        border: none;
+        /* border-radius: 8px; */
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.2);
+      }
+
+      button:hover {
+        background: var(--primary-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px -1px rgba(99, 102, 241, 0.3);
+      }
+
+      button:active {
+        transform: translateY(1px);
+        box-shadow: 0 2px 4px -1px rgba(99, 102, 241, 0.2);
+      }
+
+      /* Option/Answer Styling */
+      .option {
+        display: flex;
+        align-items: center;
+        margin: 12px 0;
+        padding: 16px;
+        background: #f8fafc;
+        border: 2px solid var(--border-color);
+        border-radius: 12px;
+        text-align: left;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 1.05rem;
+        font-weight: 500;
+        color: var(--text-main);
+      }
+
+      .option:hover {
+        border-color: var(--primary-color);
+        background: #eef2ff;
+      }
+
+      .option input[type="radio"] {
+        margin-right: 15px;
+        transform: scale(1.3);
+        accent-color: var(--primary-color);
+        cursor: pointer;
+      }
+
+      /* Inputs */
+      input[type="text"] {
+        width: 90%;
+        padding: 12px;
+        margin-top: 10px;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        font-size: 1rem;
+      }
+
+      /* Screen Transition Animation */
+      #start-screen,
+      #quiz-screen,
+      #section-complete,
+      #result-screen {
+        animation: fadeIn 0.4s ease-out forwards;
+      }
+
+      
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      #quiz-screen h2 {
+        color: blue;
+      }
+
+      #start-screen h1 {
+        /* color: blue; */
+        margin-bottom: 40px;
+        font-size: 37px;
+      }
+
+      /* =========================================
+           SCORECARD / RESULT SCREEN STYLES (HORIZONTAL CERTIFICATE)
+           ========================================= */
+
+      /* Expand container when scorecard is visible */
+      body:has(#result-screen:not([style*="none"])) .container {
+        max-width: 950px;
+      }
+
+      /* Certificate Base */
+      #result-screen {
+        background: white;
+        padding: 35px;
+        border-radius: var(--radius);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        border: 12px solid #e0e7ff;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Inner certificate border */
+      #result-screen::after {
+        content: "";
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+        /* border: 2px solid var(--primary-color); */
+        border-radius: 6px;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      /* Grid Layout for Horizontal Flow */
+      .result-card {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1.5fr;
+        gap: 15px 25px;
+        align-items: stretch;
+        text-align: left;
+      }
+
+      /* Certificate Title */
+      .result-card > h2 {
+        grid-column: 1 / -1;
+        text-align: center;
+        font-size: 2.2rem;
+        margin-top: 5px;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: var(--primary-hover);
+      }
+
+      /* Left Column: Student Info */
+      #student-info {
+        grid-column: 1 / 2;
+        grid-row: 2 / 5;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: #f8fafc;
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+      }
+
+      #student-info p {
+        background: #fff;
+        padding: 12px;
+        border-radius: 8px;
+        margin: 8px 0;
+        font-weight: 700;
+        text-align: center;
+        color: var(--primary-color);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+        border: 1px solid var(--border-color);
+      }
+
+      /* Middle Column: Subject Scores */
+      .result-card .result-row:nth-of-type(1) {
+        grid-column: 2 / 3;
+        grid-row: 2;
+      }
+      .result-card .result-row:nth-of-type(2) {
+        grid-column: 2 / 3;
+        grid-row: 3;
+      }
+      .result-card .result-row:nth-of-type(3) {
+        grid-column: 2 / 3;
+        grid-row: 4;
+      }
+
+      .result-row {
+        background: #f1f5f9;
+        border-radius: 12px;
+        padding: 14px 16px;
+        margin: 15px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: 0.2s ease;
+        height: fit-content;
+        align-self: center;
+      }
+
+      .result-row:hover {
+        transform: scale(1.03);
+        background: #e2e8f0;
+      }
+
+      .result-row span:last-child {
+        font-weight: 800;
+        font-size: 1.1rem;
+        color: var(--text-main);
+      }
+
+      label {
+        display: block;
+        text-align: left;
+        margin: 10px 0 10px 0; /* top, right, bottom, left */
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        font-size: 1rem;
+        /* margin: 0; remove extra spacing */
+      }
+
+      .form-group {
+        text-align: left;
+        margin-bottom: 15px;
+        margin-right: 30px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .form-group input {
+        width: 100%;
+      }
+
+      .math {
+        color: #f59e0b;
+      }
+      .science {
+        color: #10b981;
+      }
+      .aptitude {
+        color: #8b5cf6;
+      }
+
+      /* Left+Middle Span: Total Score */
+      #result-screen h3#totalScore {
+        grid-column: 1 / 3;
+        grid-row: 5;
+        margin-top: 15px;
+        padding-top: 20px;
+        border-top: 2px dashed var(--border-color);
+        color: var(--primary-color);
+        font-size: 1.8rem;
+        font-weight: 800;
+        text-align: center;
+        align-self: end;
+      }
+
+      #result-screen h2 {
+        color: black;
+        font-size: 35px;
+      }
+
+      /* Right Column: Analysis & Feedback */
+      #analysis {
+        grid-column: 3 / 4;
+        grid-row: 2 / 6;
+        text-align: left;
+        border-left: 2px dashed var(--border-color);
+        padding-left: 25px;
+        margin-top: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      #analysis > h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+        color: var(--text-main);
+        text-align: center;
+      }
+
+      #analysis p {
+        background: #f8fafc;
+        padding: 10px 12px;
+        border-radius: 8px;
+        margin: 5px 0;
+        font-size: 0.95rem;
+        border: 1px solid var(--border-color);
+      }
+
+      #overallFeedback {
+        margin-top: 15px;
+        margin-bottom: 5px;
+        font-size: 1.1rem;
+        color: var(--primary-color);
+        text-align: center;
+        font-weight: 700;
+      }
+
+      /* Career Section inside Analysis */
+      #career-section {
+        margin-top: 10px;
+        background: #eef2ff;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid #c7d2fe;
+      }
+
+      #career-section h3 {
+        margin-top: 5px;
+        margin-bottom: 8px;
+        font-size: 1.05rem;
+        color: var(--primary-color);
+        color: blue;
+      }
+
+      #career-section p {
+        background: #ffffff;
+        padding: 10px;
+        border-radius: 6px;
+        margin: 5px 0;
+        border: 1px solid #e2e8f0;
+        font-size: 0.9rem;
+        color: black;
+      }
+
+      @media (max-width: 850px) {
+        .result-card {
+          grid-template-columns: 1fr;
+        }
+        .result-card > h2 {
+          grid-column: 1;
+        }
+        #student-info {
+          grid-column: 1;
+          grid-row: auto;
+        }
+        .result-card .result-row:nth-of-type(1) {
+          grid-column: 1;
+          grid-row: auto;
+        }
+        .result-card .result-row:nth-of-type(2) {
+          grid-column: 1;
+          grid-row: auto;
+        }
+        .result-card .result-row:nth-of-type(3) {
+          grid-column: 1;
+          grid-row: auto;
+        }
+        #result-screen h3#totalScore {
+          grid-column: 1;
+          grid-row: auto;
+        }
+        #analysis {
+          grid-column: 1;
+          grid-row: auto;
+          border-left: none;
+          border-top: 2px dashed var(--border-color);
+          padding-left: 0;
+          padding-top: 20px;
+          margin-top: 15px;
+        }
+      }
+
+      /* DARK MODE BASE */
+      .dark {
+        background: #0f172a;
+        color: #e2e8f0;
+      }
+
+      /* CONTAINER */
+      .dark .container {
+        background: transparent;
+      }
+
+      /* TEXT */
+      .dark h1,
+      .dark h2,
+      .dark h3 {
+        color: #f1f5f9;
+      }
+
+      .dark p {
+        color: black;
+      }
+      /* INPUTS */
+      .dark input {
+        background: #1e293b;
+        color: #e2e8f0;
+        border: 1px solid #334155;
+      }
+
+      /* OPTIONS (if buttons/divs inside #options) */
+      .dark #options div,
+      .dark #options button {
+        background: #1e293b;
+        color: #e2e8f0;
+        border: 1px solid #334155;
+      }
+
+      /* BUTTONS */
+      .dark button {
+        background: #334155;
+        color: white;
+      }
+
+      .dark button:hover {
+        background: #475569;
+      }
+
+      /* RESULT BOX */
+      .dark #result-screen {
+        background: transparent;
+      }
+
+      /* LABEL COLORS (optional glow look) */
+      .dark .label.math {
+        color: #38bdf8;
+      }
+
+      .dark .label.science {
+        color: #22c55e;
+      }
+
+      .dark .label.aptitude {
+        color: #facc15;
+      }
+
+      /* ANALYSIS */
+      .dark #analysis {
+        color: #cbd5f5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="start-screen">
+        <h1>About Yourself 📋</h1>
+
+        <div class="form-group">
+          <label for="studentName">Name:</label>
+          <input type="text" id="studentName" placeholder="Enter your name" />
+        </div>
+
+        <div class="form-group">
+          <label for="studentClass">Class:</label>
+          <input type="text" id="studentClass" placeholder="Enter your class" />
+        </div>
+
+         <button onclick="startTest()">📝 Start Test</button>
+
+         <a href="/index.html">
+          <button>🏠 Home</button>
+        </a>
+
+
+       
+      </div>
+
+      <div id="quiz-screen" style="display: none">
+        <h2 id="section-title"></h2>
+        <h3 id="question"></h3>
+
+        <div id="options"></div>
+
+        <button onclick="prevQuestion()">Previous</button>
+        <button onclick="nextQuestion()">Next</button>
+      </div>
+
+      <div id="section-complete" style="display: none">
+        <h2 id="section-msg"></h2>
+        <button onclick="goToNextSection()">Go to Next Section</button>
+      </div>
+
+      <div id="result-screen" style="display: none">
+        <h2>Scorecard 📊</h2>
+
+        <div id="student-info">
+          <p id="displayName"></p>
+          <p id="displayClass"></p>
+        </div>
+
+        <div class="result-row">
+          <span class="label math">📐 Maths</span>
+          <span id="mathScore"></span>
+        </div>
+
+        <div class="result-row">
+          <span class="label science">🔬 Science</span>
+          <span id="scienceScore"></span>
+        </div>
+
+        <div class="result-row">
+          <span class="label aptitude">🧠 Aptitude</span>
+          <span id="aptitudeScore"></span>
+        </div>
+
+        <h3 id="totalScore"></h3>
+
+        <div id="analysis">
+          <h3>Analysis</h3>
+
+          <p id="mathFeedback"></p>
+          <p id="scienceFeedback"></p>
+          <p id="aptitudeFeedback"></p>
+
+          <h3 id="overallFeedback"></h3>
+
+          <div id="career-section">
+            <h3>Suggestions</h3>
+            <p id="recommendation"></p>
+
+            <h3>Career Recommendation</h3>
+            <p id="careerSuggestion"></p>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px; display: flex; justify-content: center; gap: 10px;">
+  
+
+  <a href="/dashboard.html">
+    <button>📊 Dashboard</button>
+  </a>
+
+  <a href="/index.html">
+    <button>🏠 Home</button>
+  </a>
+</div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

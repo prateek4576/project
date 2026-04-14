@@ -1,0 +1,556 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Login - Aptitude Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+
+    <style>
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Fredoka One", cursive;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background: #f4f6f9;
+      }
+
+      /* Navbar */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(10px); /* glass blur effect */
+        -webkit-backdrop-filter: blur(10px);
+        padding: 15px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        padding-left: 100px;
+        padding-right: 100px;
+      }
+
+      nav h2 {
+        font-size: 26px;
+        font-weight: 800;
+        /* background: linear-gradient(135deg, var(--primary), var(--secondary)); */
+        /* -webkit-background-clip: text; */
+        /* -webkit-text-fill-color: transparent; */
+        letter-spacing: -0.2px;
+        cursor: pointer;
+        color: rgb(47, 63, 241);
+      }
+
+      nav a {
+        color: #334155;
+        margin: 0 15px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: 0.3s;
+      }
+
+      nav a:hover {
+        color: #1abc9c;
+      }
+
+      /* Hero Section */
+      .hero {
+        background: linear-gradient(135deg, #eff6ff 0%, #ecfdf5 100%);
+        border-bottom: 1px solid #e2e8f0;
+        /* color: white; */
+        text-align: center;
+        padding: 35px 20px;
+      }
+
+      .hero h1 {
+        font-size: 36px;
+         color: #1e293b; /* dark heading */
+      }
+
+      .hero p {
+        margin-top: 8px;
+        opacity: 0.9;
+        color: #475569; /* softer paragraph */
+      }
+
+      /* Form Section */
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 50px 20px;
+      }
+
+      .form-box {
+        background: white;
+        padding: 50px;
+        border-radius: 15px;
+        width: 100%;
+        max-width: 500px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        /* border: 2px solid black; */
+      }
+
+      .form-box h2 {
+        margin-bottom: 20px;
+        color: blue;
+        font-size: 28px;
+      }
+
+
+
+      input {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+        transition: 0.3s;
+      }
+
+      input:focus {
+        border-color: #3498db;
+        outline: none;
+        box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+      }
+
+      .form-box button {
+        width: 100%;
+        padding: 18px;
+        background: blue;
+        border: none;
+        color: white;
+        border-radius: 50px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        background: #2c3e50;
+        transform: scale(1.03);
+      }
+
+      .extra-links {
+        margin-top: 15px;
+        font-size: 16px;
+      }
+
+      .extra-links a {
+        color: blue;
+        text-decoration: none;
+        font-weight: 500;
+
+        margin: 0 5px;
+      }
+
+      .extra-links a:hover {
+        text-decoration: underline;
+      }
+
+      /* Footer */
+      footer {
+        background: #2c3e50;
+        color: white;
+        text-align: center;
+        padding: 15px;
+      }
+
+      /* ========================= */
+      /* 📱 MOBILE (max 600px) */
+      /* ========================= */
+      @media (max-width: 600px) {
+        nav {
+          flex-direction: column;
+          align-items: center;
+          padding: 10px;
+        }
+
+        nav h2 {
+          margin-bottom: 10px;
+          font-size: 22px;
+        }
+
+        .hero h1 {
+          font-size: 28px;
+        }
+
+        .hero p {
+          font-size: 15px;
+        }
+
+        .form-box {
+          padding: 20px;
+          border-radius: 10px;
+        }
+
+        input {
+          font-size: 13px;
+        }
+
+        button {
+          font-size: 14px;
+        }
+      }
+
+      /* ========================= */
+      /* 📲 TABLET (601px–1024px) */
+      /* ========================= */
+      @media (max-width: 1024px) {
+        .hero h1 {
+          font-size: 36px;
+        }
+
+        .hero p {
+          font-size: 17px;
+        }
+
+        .form-box {
+          max-width: 350px;
+        }
+      }
+
+      /* ========================= */
+      /* 💻 LARGE SCREENS */
+      /* ========================= */
+      @media (min-width: 1200px) {
+        .hero h1 {
+          font-size: 50px;
+        }
+
+        .hero p {
+          font-size: 18px;
+        }
+      }
+
+      /* DARK MODE BASE */
+      .dark {
+        background: #0f172a;
+        color: white;
+      }
+
+      /* NAVBAR */
+      .dark nav {
+        background: rgba(15, 23, 42, 0.9);
+      }
+      .dark nav h2 {
+        color: #e2e8f0;
+      }
+
+      .dark nav a {
+        color: #e2e8f0;
+      }
+
+      /* HERO */
+      .dark .hero {
+        background: linear-gradient(135deg, #020617, #0f172a, #1e293b);
+        color: #e2e8f0;
+      }
+      .dark .hero h1 {
+        color: #f1f5f9;
+      }
+      .dark .hero p {
+        color: #cbd5f5;
+      }
+
+      /* FORM */
+      .dark .form-box {
+        background: #1e293b;
+        border: 1px solid #334155;
+      }
+
+      .dark .form-box h2 {
+        color: #f8fafc;
+      }
+
+      .dark input {
+        background: #0f172a;
+        color: white;
+        border: 1px solid #334155;
+      }
+
+      .dark button {
+        background: #334155;
+      }
+
+      .dark button:hover {
+        background: #475569;
+      }
+
+      /* FOOTER */
+      .dark footer {
+        background: #020617;
+      }
+
+      /* TOGGLE BUTTON */
+      #toggleBtn {
+        margin-left: 10px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+        background: #111;
+        color: white;
+      }
+
+      label {
+        display: block;
+        text-align: left;
+        margin-top: 15px;
+        /* margin-bottom: 5px; */
+        font-weight: 600;
+        color: #2c3e50;
+        font-size: 14px;
+      }
+
+      .dark label {
+        color: #e2e8f0;
+      }
+
+    
+
+      /* TOP FOOTER */
+      .top-footer {
+        background: #f4f6f9;
+        padding: 60px 100px 30px;
+        margin-top: 40px;
+        border-top: 1px solid #e2e8f0;
+      }
+
+      .footer-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+
+        max-width: 1300px;
+        margin: auto;
+        padding-bottom: 40px;
+      }
+
+      /* LEFT */
+      .footer-about {
+        max-width: 320px;
+      }
+
+      .footer-about h2 {
+        color: #1d4ed8;
+        margin-bottom: 15px;
+      }
+
+      .footer-about p {
+        color: #475569;
+        line-height: 1.6;
+      }
+
+      /* LINKS */
+      .footer-links {
+        min-width: 150px;
+      }
+
+      .footer-links h3 {
+        color: #1d4ed8;
+        margin-bottom: 15px;
+      }
+
+      .footer-links a {
+        display: block;
+        text-decoration: none;
+        color: #475569;
+        margin-bottom: 8px;
+        transition: 0.3s;
+      }
+
+      .footer-links a:hover {
+        color: #3b82f6;
+        transform: translateX(5px);
+      }
+
+      .dark .top-footer {
+        background: #0f172a;
+        border-top: 1px solid #1e293b;
+      }
+
+      .dark .footer-about p,
+      .dark .footer-links a {
+        color: #cbd5f5;
+      }
+
+      .dark .footer-about h2 {
+        color: #38bdf8;
+      }
+
+      .dark .footer-links h3 {
+        color: #38bdf8;
+      }
+
+      footer {
+        margin-top: 0; /* remove extra gap */
+        background: #2c3e50;
+        color: white;
+        text-align: center;
+        padding: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <h2>🧒 CAAT</h2>
+      <div>
+        <a href="index.html">🏠 Home</a>
+        <a href="about.html">📖 About</a>
+        <a href="contact.html">✉️ Contact</a>
+        <a href="login.html" style="color: #1abc9c">🔑 Login</a>
+        <a href="signup.html">✨ Signup</a>
+        <button id="toggleBtn">🌙</button>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <h1>Welcome Back 🔑</h1>
+      <p>Sign in to continue your assessment journey</p>
+    </div>
+
+    <div class="container">
+      <div class="form-box">
+        <h2>Login 🔐</h2>
+
+        <form id="loginForm">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+          />
+
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+          />
+
+          <button type="submit">🔑 Login</button>
+        </form>
+
+        <div id="loginResult" style="display: none; margin-top: 15px">
+          <p id="attemptText"></p>
+          <button onclick="startAgain()">Start The Quiz Again?</button>
+        </div>
+
+        <div class="extra-links">
+          <!-- <a href="#">Forgot Password</a> | -->
+          New user?
+          <a href="signup.html">Create Account</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="top-footer">
+      <div class="footer-container">
+        <!-- LEFT -->
+        <div class="footer-about">
+          <h2>🧒 CAAT</h2>
+          <p>
+            Helping every child discover their unique aptitude and potential
+            through smart, fun assessments.
+          </p>
+        </div>
+
+        <!-- MIDDLE -->
+        <div class="footer-links">
+          <h3>Pages</h3>
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="footer-links">
+          <h3>Account</h3>
+          <a href="signup.html">Sign Up</a>
+          <a href="login.html">Login</a>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 Child Aptitude Assessment Test (CAAT) | All Rights Reserved</p>
+    </footer>
+
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          let email = document.querySelector('input[name="email"]').value;
+          let password = document.querySelector('input[name="password"]').value;
+
+          let res = await fetch("/check-user", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          });
+
+          let data = await res.json();
+
+          if (data.status === "success") {
+            window.location.href = "/dashboard.html";
+          } else if (data.status === "wrong_password") {
+            alert("Incorrect password ❌ Try again");
+          } else if (data.status === "no_user") {
+            alert("Email not registered ❌ Please signup first");
+            window.location.href = "/signup.html";
+          }
+        });
+
+      function startAgain() {
+        window.location.href = "/quiz.html";
+      }
+    </script>
+
+    <script>
+      const toggleBtn = document.getElementById("toggleBtn");
+
+      // Load saved mode
+      if (localStorage.getItem("mode") === "dark") {
+        document.body.classList.add("dark");
+        toggleBtn.innerText = "☀️";
+      }
+
+      toggleBtn.onclick = () => {
+        document.body.classList.toggle("dark");
+
+        if (document.body.classList.contains("dark")) {
+          localStorage.setItem("mode", "dark");
+          toggleBtn.innerText = "☀️";
+        } else {
+          localStorage.setItem("mode", "light");
+          toggleBtn.innerText = "🌙";
+        }
+      };
+    </script>
+  </body>
+</html>
