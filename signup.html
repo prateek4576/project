@@ -2,7 +2,10 @@
 <html>
   <head>
     <title>Signup - Aptitude Tool</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap"
+      rel="stylesheet"
+    />
 
     <style>
       h1,
@@ -314,7 +317,9 @@
         text-align: left;
         margin-top: 15px;
         /* margin-bottom: 5px; */
-        font-weight: 600;
+        font-family: "Fredoka One", cursive;
+        font-weight: 400;
+        letter-spacing: 0.5px;
         color: #2c3e50;
         font-size: 14px;
       }
@@ -322,8 +327,6 @@
       .dark label {
         color: #e2e8f0;
       }
-
-
 
       /* TOP FOOTER */
       .top-footer {
@@ -406,16 +409,14 @@
         color: white;
         text-align: center;
         padding: 15px;
-
-        
       }
 
       #matchMsg {
-  font-size: 13px;
-  margin-top: 5px;
-  text-align: left;
-  font-weight: 500;
-}
+        font-size: 13px;
+        margin-top: 5px;
+        text-align: left;
+        font-weight: 500;
+      }
     </style>
   </head>
   <body>
@@ -440,7 +441,11 @@
       <div class="form-box">
         <h2>Signup ✨</h2>
 
-        <form action="/signup-submit" method="POST" onsubmit="return validatePassword()">
+        <form
+          action="/signup-submit"
+          method="POST"
+          onsubmit="return validatePassword();"
+        >
           <label for="email">Email</label>
           <input
             type="email"
@@ -460,15 +465,15 @@
           />
 
           <label for="confirmPassword">Confirm Password</label>
-<input
-  type="password"
-  id="confirmPassword"
-  placeholder="Re-enter your password"
-  onkeyup="checkMatch()"
-  required
-/>
+          <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Re-enter your password"
+            onkeyup="checkMatch()"
+            required
+          />
 
-<p id="matchMsg"></p>
+          <p id="matchMsg"></p>
 
           <button type="submit">🚀 Create Account</button>
         </form>
@@ -533,37 +538,33 @@
       };
 
       // Password validation
-     function validatePassword() {
-  let password = document.getElementById("password").value;
-  let confirmPassword = document.getElementById("confirmPassword").value;
+      function validatePassword() {
+        let password = document.getElementById("password").value;
+        let confirmPassword = document.getElementById("confirmPassword").value;
 
-  if (password !== confirmPassword) {
-    alert("❌ Please write same password in both field");
-    return false;
-  }
+        if (password !== confirmPassword) {
+          alert("❌ Please write same password in both field");
+          return false;
+        }
 
-  return true;
-}
+        return true;
+      }
 
-function checkMatch() {
-  let password = document.getElementById("password").value;
-  let confirmPassword = document.getElementById("confirmPassword").value;
-  let msg = document.getElementById("matchMsg");
+      function checkMatch() {
+        let password = document.getElementById("password").value;
+        let confirmPassword = document.getElementById("confirmPassword").value;
+        let msg = document.getElementById("matchMsg");
 
-  if (confirmPassword === "") {
-    msg.innerText = "";
-  } 
-  else if (password === confirmPassword) {
-    msg.innerText = "✅ Password matched";
-    msg.style.color = "green";
-  } 
-  else {
-    msg.innerText = "❌ Password not matching";
-    msg.style.color = "red";
-  }
-}
-
-
+        if (confirmPassword === "") {
+          msg.innerText = "";
+        } else if (password === confirmPassword) {
+          msg.innerText = "✅ Password matched";
+          msg.style.color = "green";
+        } else {
+          msg.innerText = "❌ Password not matching";
+          msg.style.color = "red";
+        }
+      }
     </script>
   </body>
 </html>
