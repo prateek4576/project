@@ -328,7 +328,7 @@
 
       /* TOP FOOTER */
       .top-footer {
-        background: #f4f6f9;
+        background: rgba(255, 255, 255, 0.85);
         padding: 60px 100px 30px;
         margin-top: 40px;
         border-top: 1px solid #e2e8f0;
@@ -517,6 +517,7 @@
           let data = await res.json();
 
           if (data.status === "success") {
+            localStorage.setItem("userEmail", email);
             window.location.href = "/dashboard.html";
           } else if (data.status === "wrong_password") {
             alert("Incorrect password ❌ Try again");

@@ -17,10 +17,10 @@ server.use(express.urlencoded({ extended: true }));
 server.use(express.json());
 server.use(express.static(__dirname));
 
-// const url = "mongodb://localhost:27017";
+const url = "mongodb://localhost:27017";
 // const client = new MongoClient(url);
 
-const url = process.env.MONGO_URI;
+// const url = process.env.MONGO_URI;
 const client = new MongoClient(url);
 
 let db;
