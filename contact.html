@@ -373,6 +373,52 @@
         text-align: center;
         padding: 15px;
       }
+
+      
+      /* Fix full page height */
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Push footer down + center form */
+.container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Mobile fix */
+@media (max-width: 600px) {
+
+  body {
+    min-height: 100vh;
+  }
+
+  .container {
+    flex: 1;
+    padding: 20px;
+    align-items: center;
+  }
+
+  .form-box {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .top-footer {
+    padding: 30px 20px;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    text-align: center;
+  }
+}
     </style>
   </head>
   <body>
