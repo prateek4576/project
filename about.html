@@ -371,6 +371,51 @@ footer {
 .dark .footer-links h3 {
   color: #38bdf8;
 }
+
+       /* Full height layout */
+      html,
+      body {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Make main content take space */
+      .container {
+        flex: 1;
+      }
+
+      /* Mobile fixes */
+      @media (max-width: 600px) {
+        body {
+          min-height: 100vh;
+        }
+
+        .container {
+          flex: 1;
+          padding: 20px;
+        }
+
+        .cards {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .card {
+          width: 100%;
+        }
+
+        .top-footer {
+          padding: 30px 20px;
+        }
+
+        .footer-container {
+          flex-direction: column;
+          gap: 20px;
+          align-items: center;
+          text-align: center;
+        }
+      }
     </style>
   </head>
   <body>
