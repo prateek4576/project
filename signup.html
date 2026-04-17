@@ -417,6 +417,52 @@
         text-align: left;
         font-weight: 500;
       }
+
+      
+      /* Fix full height layout */
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Push footer down */
+.container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Mobile alignment fix */
+@media (max-width: 600px) {
+
+  body {
+    min-height: 100vh;
+  }
+
+  .container {
+    flex: 1;
+    padding: 20px;
+    align-items: center;
+  }
+
+  .form-box {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .top-footer {
+    padding: 30px 20px;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    text-align: center;
+  }
+}
     </style>
   </head>
   <body>
